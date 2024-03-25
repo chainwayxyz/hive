@@ -263,7 +263,7 @@ func (api *simAPI) startClient(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// by default: check the eth1 port
-	options.CheckLive = 8545
+	options.CheckLive = 12345
 	if portStr := env["HIVE_CHECK_LIVE_PORT"]; portStr != "" {
 		v, err := strconv.ParseUint(portStr, 10, 16)
 		if err != nil {

@@ -18,8 +18,8 @@ import (
 
 var (
 	// This is the account that sends vault funding transactions.
-	vaultAccountAddr = common.HexToAddress("0xcf49fda3be353c69b41ed96333cd24302da4556f")
-	vaultKey, _      = crypto.HexToECDSA("63b508a03c3b5937ceb903af8b1b0c191012ef6eb7e9c3fb7afa94e5d214d376")
+	vaultAccountAddr = common.HexToAddress("a94f5374fce5edbc8e2a8697c15331677e6ebf0b")
+	vaultKey, _      = crypto.HexToECDSA("45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8")
 	// Address of the vault in genesis.
 	predeployedVaultAddr = common.HexToAddress("0000000000000000000000000000000000000315")
 	// Number of blocks to wait before funding tx is considered valid.
@@ -201,17 +201,17 @@ func (v *vault) createAccount(t *TestEnv, amount *big.Int) common.Address {
 }
 
 func (v *vault) makeFundingTx(t *TestEnv, recipient common.Address, amount *big.Int) *types.Transaction {
-	vault, _ := abi.JSON(strings.NewReader(predeployedVaultABI))
-	payload, err := vault.Pack("sendSome", recipient, amount)
-	if err != nil {
-		t.Fatalf("can't pack pack vault tx input: %v", err)
-	}
+	// vault, _ := abi.JSON(strings.NewReader(predeployedVaultABI))
+	// // payload, err := vault.Pack("sendSome", recipient, amount)
+	// if err != nil {
+	// 	t.Fatalf("can't pack pack vault tx input: %v", err)
+	// }
 	var (
 		nonce    = v.nextNonce()
 		gasLimit = uint64(75000)
-		txAmount = new(big.Int)
 	)
-	tx := types.NewTransaction(nonce, predeployedVaultAddr, txAmount, gasLimit, gasPrice, payload)
+	// tx := types.NewTransaction(nonce, predeployedVaultAddr, txAmount, gasLimit, gasPrice, payload)
+	tx := types.NewTransaction(nonce, recipient, amount, gasLimit, gasPrice, nil)
 	signer := types.NewEIP155Signer(chainID)
 	signedTx, err := types.SignTx(tx, signer, vaultKey)
 	if err != nil {
