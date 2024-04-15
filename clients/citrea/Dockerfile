@@ -1,5 +1,5 @@
 ARG baseimage=ercecan/citrea-sequencer
-ARG tag=v11
+ARG tag=v50
 
 FROM $baseimage:$tag as builder
 

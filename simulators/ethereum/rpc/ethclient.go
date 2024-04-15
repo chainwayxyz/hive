@@ -206,6 +206,8 @@ func balanceAndNonceAtTest(t *TestEnv) {
 	exp := new(big.Int).Set(sourceAddressBalanceBefore)
 	exp.Sub(exp, amount)
 	exp.Sub(exp, new(big.Int).Mul(big.NewInt(int64(receipt.GasUsed)), valueTx.GasPrice()))
+	// subtract citrea diff size * l1 fee rate
+	exp.Sub(exp, new(big.Int).Mul(big.NewInt(104), big.NewInt(10)))
 
 	if exp.Cmp(accountBalanceAfter) != 0 {
 		t.Errorf("Expected sender account to have a balance of %d, got %d", exp, accountBalanceAfter)
@@ -231,11 +233,21 @@ func balanceAndNonceAtTest(t *TestEnv) {
 func genesisHeaderByHashTest(t *TestEnv) {
 	gblock := loadGenesis()
 
-	headerByHash, err := t.Eth.HeaderByHash(t.Ctx(), gblock.Hash())
+	// Use Citrea's genesis block hash
+	citreaBlockHash := common.HexToHash("0x63093405a94724df593617b4bdc27d4b127b750ddf6f102ec054d1412c97b4c7")
+
+	// Use Citrea's genesis root hash
+	citreaRootHash := common.HexToHash("0xc6836cb58878609251b42fe0daf8d6356272cce5a835adf393cabc3eb017ec06")
+
+	// Change the Root of the genesis block's header to match citrea's root
+	newHeader := gblock.Header()
+	newHeader.Root = citreaRootHash
+
+	headerByHash, err := t.Eth.HeaderByHash(t.Ctx(), citreaBlockHash)
 	if err != nil {
 		t.Fatalf("Unable to fetch block %x: %v", gblock.Hash(), err)
 	}
-	if d := diff(gblock.Header(), headerByHash); d != "" {
+	if d := diff(newHeader, headerByHash); d != "" {
 		t.Fatal("genesis header reported by node differs from expected header:\n", d)
 	}
 }
@@ -246,11 +258,18 @@ func genesisHeaderByHashTest(t *TestEnv) {
 func genesisHeaderByNumberTest(t *TestEnv) {
 	gblock := loadGenesis()
 
+	// Use Citrea's genesis root hash
+	citreaRootHash := common.HexToHash("0xc6836cb58878609251b42fe0daf8d6356272cce5a835adf393cabc3eb017ec06")
+
+	// Change the Root of the genesis block's header to match citrea's root
+	newHeader := gblock.Header()
+	newHeader.Root = citreaRootHash
+
 	headerByNum, err := t.Eth.HeaderByNumber(t.Ctx(), big0)
 	if err != nil {
 		t.Fatalf("Unable to fetch genesis block: %v", err)
 	}
-	if d := diff(gblock.Header(), headerByNum); d != "" {
+	if d := diff(newHeader, headerByNum); d != "" {
 		t.Fatal("genesis header reported by node differs from expected header:\n", d)
 	}
 }
@@ -260,11 +279,23 @@ func genesisHeaderByNumberTest(t *TestEnv) {
 func genesisBlockByHashTest(t *TestEnv) {
 	gblock := loadGenesis()
 
-	blockByHash, err := t.Eth.BlockByHash(t.Ctx(), gblock.Hash())
+	// gblock.root = [1,2,3]
+
+	citreaBlockHash := common.HexToHash("0x63093405a94724df593617b4bdc27d4b127b750ddf6f102ec054d1412c97b4c7")
+
+	// Use Citrea's genesis root hash
+	citreaRootHash := common.HexToHash("0xc6836cb58878609251b42fe0daf8d6356272cce5a835adf393cabc3eb017ec06")
+
+	// Change the Root of the genesis block's header to match citrea's root
+	newHeader := gblock.Header()
+	newHeader.Root = citreaRootHash
+
+	blockByHash, err := t.Eth.BlockByHash(t.Ctx(), citreaBlockHash)
+
 	if err != nil {
 		t.Fatalf("Unable to fetch block %x: %v", gblock.Hash(), err)
 	}
-	if d := diff(gblock.Header(), blockByHash.Header()); d != "" {
+	if d := diff(newHeader, blockByHash.Header()); d != "" {
 		t.Fatal("genesis header reported by node differs from expected header:\n", d)
 	}
 }
@@ -275,11 +306,18 @@ func genesisBlockByHashTest(t *TestEnv) {
 func genesisBlockByNumberTest(t *TestEnv) {
 	gblock := loadGenesis()
 
+	// Use Citrea's genesis root hash
+	citreaRootHash := common.HexToHash("0xc6836cb58878609251b42fe0daf8d6356272cce5a835adf393cabc3eb017ec06")
+
+	// Change the Root of the genesis block's header to match citrea's root
+	newHeader := gblock.Header()
+	newHeader.Root = citreaRootHash
+
 	blockByNum, err := t.Eth.BlockByNumber(t.Ctx(), big0)
 	if err != nil {
 		t.Fatalf("Unable to fetch genesis block: %v", err)
 	}
-	if d := diff(gblock.Header(), blockByNum.Header()); d != "" {
+	if d := diff(newHeader, blockByNum.Header()); d != "" {
 		t.Fatal("genesis header reported by node differs from expected header:\n", d)
 	}
 }

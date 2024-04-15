@@ -8,3 +8,5 @@ workspace
 simulators/**/target
 hivesim-rs/Cargo.lock
 hivesim-rs/target
+.DS_Store
+hiveview
