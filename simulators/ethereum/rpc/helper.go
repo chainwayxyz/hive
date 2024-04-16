@@ -47,6 +47,7 @@ func runHTTP(t *hivesim.T, c *hivesim.Client, v *vault, fn func(*TestEnv)) {
 		},
 	}
 
+	fmt.Printf("\n\n\n\n\n\n\n\n\n\n\n\n\nhttp://%v:8545/\n\n\n\n\n\n\n\n\n\n\n\n\n", c.IP)
 	rpcClient, _ := rpc.DialHTTPWithClient(fmt.Sprintf("http://%v:8545/", c.IP), client)
 	defer rpcClient.Close()
 	env := &TestEnv{

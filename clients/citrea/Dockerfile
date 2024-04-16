@@ -1,5 +1,5 @@
-ARG baseimage=chainwayxyz1/citrea
-ARG tag=latest
+ARG baseimage=ercecan/citrea-sequencer
+ARG tag=v50
 
 FROM $baseimage:$tag as builder
 

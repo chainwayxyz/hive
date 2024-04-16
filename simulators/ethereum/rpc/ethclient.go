@@ -2,8 +2,12 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
 	"math/big"
 	"math/rand"
+	"net/http"
 	"strings"
 	"time"
 
@@ -134,6 +138,97 @@ func estimateGasTest(t *TestEnv) {
 	}
 }
 
+// Define a structure for the additional fields
+type OtherFields struct {
+	Inner map[string]string
+}
+
+// Define the custom receipt type that embeds the standard Receipt type and adds OtherFields
+type CustomReceipt struct {
+	types.Receipt
+	diffSize  string
+	l1FeeRate string
+}
+
+type RPCRequest struct {
+	JSONRPC string        `json:"jsonrpc"`
+	Method  string        `json:"method"`
+	Params  []interface{} `json:"params"`
+	ID      int           `json:"id"`
+}
+
+func sendRPCRequest(txHash string) (*CustomReceipt, error) {
+	url := "http://172.17.0.4:8545/"
+	client := &http.Client{}
+
+	payload := RPCRequest{
+		JSONRPC: "2.0",
+		Method:  "eth_getTransactionReceipt",
+		Params:  []interface{}{txHash},
+		ID:      1,
+	}
+
+	jsonPayload, err := json.Marshal(payload)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	// Try to get the receipt up to 60 times with a 100ms wait between each attempt
+	var rpcResponse struct {
+		Result CustomReceipt `json:"result"`
+		Error  *struct {
+			Code    int    `json:"code"`
+			Message string `json:"message"`
+		} `json:"error"`
+		ID int `json:"id"`
+	}
+
+	for i := 0; i < 60; i++ {
+		fmt.Println("i: ", i)
+		resp, err := client.Do(req)
+		if err != nil {
+			fmt.Println("err: ", err)
+			time.Sleep(1 * time.Second) // Wait before retrying
+			continue
+		}
+		fmt.Println("i: ", i)
+		defer resp.Body.Close()
+
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			time.Sleep(1 * time.Second) // Wait before retrying
+			continue
+		}
+		fmt.Println("i: ", i)
+
+		err = json.Unmarshal(body, &rpcResponse)
+		if err != nil {
+			time.Sleep(1 * time.Second) // Wait before retrying
+			continue
+		}
+		fmt.Println("i: ", i)
+
+		if rpcResponse.Result.TxHash.Hex() != "" {
+			// print the receipt
+			fmt.Println("Receipt: ", rpcResponse.Result)
+			return &rpcResponse.Result, nil // Successfully fetched the receipt
+		}
+		fmt.Println("i: ", i)
+
+		// Receipt is not ready yet, wait before the next attempt
+		time.Sleep(1 * time.Second)
+		fmt.Println("i: ", i)
+	}
+
+	return nil, fmt.Errorf("transaction receipt not available after 60 attempts")
+}
+
 // balanceAndNonceAtTest creates a new account and transfers funds to it.
 // It then tests if the balance and nonce of the sender and receiver
 // address are updated correct.
@@ -181,7 +276,14 @@ func balanceAndNonceAtTest(t *TestEnv) {
 	}
 
 	var receipt *types.Receipt
+	// l1FeeRate
+	// diffSize
+
+	var custom_receipt *CustomReceipt
 	for {
+
+		// TODO ERCE: Write a function that returns CustomReceipt
+		custom_receipt, err = sendRPCRequest(valueTx.Hash().Hex())
 		receipt, err = t.Eth.TransactionReceipt(t.Ctx(), valueTx.Hash())
 		if receipt != nil {
 			break
@@ -206,8 +308,36 @@ func balanceAndNonceAtTest(t *TestEnv) {
 	exp := new(big.Int).Set(sourceAddressBalanceBefore)
 	exp.Sub(exp, amount)
 	exp.Sub(exp, new(big.Int).Mul(big.NewInt(int64(receipt.GasUsed)), valueTx.GasPrice()))
+
+	diffSizeStr := custom_receipt.diffSize
+	fmt.Printf("diffSizeStr: %s\n", diffSizeStr)
+
+	l1FeeRateStr := custom_receipt.l1FeeRate
+	fmt.Printf("l1feeratestr: %s\n", l1FeeRateStr)
+
+	fmt.Println("custom receipt: ", custom_receipt)
+	fmt.Println("receipt: ", receipt)
+
+	// Convert hex strings to big.Int
+	diffSize := new(big.Int)
+	l1FeeRate := new(big.Int)
+
+	_, success := diffSize.SetString(diffSizeStr[2:], 16) // Remove the '0x' prefix and parse as base 16
+
+	if !success {
+		t.Fatalf("invalid diffSize value")
+	}
+	fmt.Printf("diffSize: %s\n", diffSize)
+	_, success = l1FeeRate.SetString(l1FeeRateStr[2:], 16) // Remove the '0x' prefix and parse as base 16
+	if !success {
+		t.Fatalf("invalid l1FeeRate value")
+	}
+	fmt.Printf("l1FeeRate: %s\n", l1FeeRate)
+
+	fee := new(big.Int).Mul(diffSize, l1FeeRate)
+
 	// subtract citrea diff size * l1 fee rate
-	exp.Sub(exp, new(big.Int).Mul(big.NewInt(104), big.NewInt(10)))
+	exp.Sub(exp, fee)
 
 	if exp.Cmp(accountBalanceAfter) != 0 {
 		t.Errorf("Expected sender account to have a balance of %d, got %d", exp, accountBalanceAfter)
