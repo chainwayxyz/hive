@@ -233,10 +233,10 @@ func balanceAndNonceAtTest(t *TestEnv) {
 func genesisHeaderByHashTest(t *TestEnv) {
 	gblock := loadGenesis()
 
-	// Use Citrea's genesis block hash
+	// Use Citrea Hive genesis block hash
 	citreaBlockHash := common.HexToHash("0x63093405a94724df593617b4bdc27d4b127b750ddf6f102ec054d1412c97b4c7")
 
-	// Use Citrea's genesis root hash
+	// Use Citrea Hive genesis root hash
 	citreaRootHash := common.HexToHash("0xc6836cb58878609251b42fe0daf8d6356272cce5a835adf393cabc3eb017ec06")
 
 	// Change the Root of the genesis block's header to match citrea's root
