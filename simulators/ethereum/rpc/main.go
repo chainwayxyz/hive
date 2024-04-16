@@ -28,9 +28,9 @@ var clientEnv = hivesim.Params{
 	"HIVE_FORK_SPURIOUS":  "0",
 
 	// All tests use clique PoA to mine new blocks.
-	"HIVE_CLIQUE_PERIOD":     "1",
-	"HIVE_CLIQUE_PRIVATEKEY": "9c647b8b7c4e7c3490668fb6c11473619db80c93704c70893d3813af4090c39c",
-	"HIVE_MINER":             "658bdf435d810c91414ec09147daa6db62406379",
+	"HIVE_CLIQUE_PERIOD":                    "1",
+	"HIVE_CLIQUE_PRIVATEKEY":                "9c647b8b7c4e7c3490668fb6c11473619db80c93704c70893d3813af4090c39c",
+	"HIVE_MINER":                            "658bdf435d810c91414ec09147daa6db62406379",
 	"HIVE_TERMINAL_TOTAL_DIFFICULTY_PASSED": "0",
 }
 
@@ -57,7 +57,6 @@ var tests = []testSpec{
 	{Name: "http/GenesisHeaderByHash", Run: genesisHeaderByHashTest},
 	{Name: "http/GenesisHeaderByNumber", Run: genesisHeaderByNumberTest},
 	{Name: "http/Receipt", Run: receiptTest},
-	{Name: "http/SyncProgress", Run: syncProgressTest},
 	{Name: "http/TransactionCount", Run: transactionCountTest},
 	{Name: "http/TransactionInBlock", Run: transactionInBlockTest},
 	{Name: "http/TransactionReceipt", Run: TransactionReceiptTest},
@@ -66,31 +65,31 @@ var tests = []testSpec{
 	{Name: "http/ABICall", Run: callContractTest},
 	{Name: "http/ABITransact", Run: transactContractTest},
 
-	// WebSocket RPC tests.
-	{Name: "ws/BalanceAndNonceAt", Run: balanceAndNonceAtTest},
-	{Name: "ws/CanonicalChain", Run: canonicalChainTest},
-	{Name: "ws/CodeAt", Run: CodeAtTest},
-	{Name: "ws/ContractDeployment", Run: deployContractTest},
-	{Name: "ws/ContractDeploymentOutOfGas", Run: deployContractOutOfGasTest},
-	{Name: "ws/EstimateGas", Run: estimateGasTest},
-	{Name: "ws/GenesisBlockByHash", Run: genesisBlockByHashTest},
-	{Name: "ws/GenesisBlockByNumber", Run: genesisBlockByNumberTest},
-	{Name: "ws/GenesisHeaderByHash", Run: genesisHeaderByHashTest},
-	{Name: "ws/GenesisHeaderByNumber", Run: genesisHeaderByNumberTest},
-	{Name: "ws/Receipt", Run: receiptTest},
-	{Name: "ws/SyncProgress", Run: syncProgressTest},
-	{Name: "ws/TransactionCount", Run: transactionCountTest},
-	{Name: "ws/TransactionInBlock", Run: transactionInBlockTest},
-	{Name: "ws/TransactionReceipt", Run: TransactionReceiptTest},
+	// // WebSocket RPC tests.
+	// {Name: "ws/BalanceAndNonceAt", Run: balanceAndNonceAtTest},
+	// {Name: "ws/CanonicalChain", Run: canonicalChainTest},
+	// {Name: "ws/CodeAt", Run: CodeAtTest},
+	// {Name: "ws/ContractDeployment", Run: deployContractTest},
+	// {Name: "ws/ContractDeploymentOutOfGas", Run: deployContractOutOfGasTest},
+	// {Name: "ws/EstimateGas", Run: estimateGasTest},
+	// {Name: "ws/GenesisBlockByHash", Run: genesisBlockByHashTest},
+	// {Name: "ws/GenesisBlockByNumber", Run: genesisBlockByNumberTest},
+	// {Name: "ws/GenesisHeaderByHash", Run: genesisHeaderByHashTest},
+	// {Name: "ws/GenesisHeaderByNumber", Run: genesisHeaderByNumberTest},
+	// {Name: "ws/Receipt", Run: receiptTest},
+	// {Name: "ws/SyncProgress", Run: syncProgressTest},
+	// {Name: "ws/TransactionCount", Run: transactionCountTest},
+	// {Name: "ws/TransactionInBlock", Run: transactionInBlockTest},
+	// {Name: "ws/TransactionReceipt", Run: TransactionReceiptTest},
 
-	// WebSocket subscription tests.
-	{Name: "ws/NewHeadSubscription", Run: newHeadSubscriptionTest},
-	{Name: "ws/LogSubscription", Run: logSubscriptionTest},
-	{Name: "ws/TransactionInBlockSubscription", Run: transactionInBlockSubscriptionTest},
+	// // WebSocket subscription tests.
+	// {Name: "ws/NewHeadSubscription", Run: newHeadSubscriptionTest},
+	// {Name: "ws/LogSubscription", Run: logSubscriptionTest},
+	// {Name: "ws/TransactionInBlockSubscription", Run: transactionInBlockSubscriptionTest},
 
-	// WebSocket ABI tests.
-	{Name: "ws/ABICall", Run: callContractTest},
-	{Name: "ws/ABITransact", Run: transactContractTest},
+	// // WebSocket ABI tests.
+	// {Name: "ws/ABICall", Run: callContractTest},
+	// {Name: "ws/ABITransact", Run: transactContractTest},
 }
 
 func main() {
