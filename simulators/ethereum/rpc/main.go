@@ -65,31 +65,31 @@ var tests = []testSpec{
 	{Name: "http/ABICall", Run: callContractTest},
 	{Name: "http/ABITransact", Run: transactContractTest},
 
-	// // WebSocket RPC tests.
-	// {Name: "ws/BalanceAndNonceAt", Run: balanceAndNonceAtTest},
-	// {Name: "ws/CanonicalChain", Run: canonicalChainTest},
-	// {Name: "ws/CodeAt", Run: CodeAtTest},
-	// {Name: "ws/ContractDeployment", Run: deployContractTest},
-	// {Name: "ws/ContractDeploymentOutOfGas", Run: deployContractOutOfGasTest},
-	// {Name: "ws/EstimateGas", Run: estimateGasTest},
-	// {Name: "ws/GenesisBlockByHash", Run: genesisBlockByHashTest},
-	// {Name: "ws/GenesisBlockByNumber", Run: genesisBlockByNumberTest},
-	// {Name: "ws/GenesisHeaderByHash", Run: genesisHeaderByHashTest},
-	// {Name: "ws/GenesisHeaderByNumber", Run: genesisHeaderByNumberTest},
-	// {Name: "ws/Receipt", Run: receiptTest},
-	// {Name: "ws/SyncProgress", Run: syncProgressTest},
-	// {Name: "ws/TransactionCount", Run: transactionCountTest},
-	// {Name: "ws/TransactionInBlock", Run: transactionInBlockTest},
-	// {Name: "ws/TransactionReceipt", Run: TransactionReceiptTest},
+	// WebSocket RPC tests.
+	{Name: "ws/BalanceAndNonceAt", Run: balanceAndNonceAtTest},
+	{Name: "ws/CanonicalChain", Run: canonicalChainTest},
+	{Name: "ws/CodeAt", Run: CodeAtTest},
+	{Name: "ws/ContractDeployment", Run: deployContractTest},
+	{Name: "ws/ContractDeploymentOutOfGas", Run: deployContractOutOfGasTest},
+	{Name: "ws/EstimateGas", Run: estimateGasTest},
+	{Name: "ws/GenesisBlockByHash", Run: genesisBlockByHashTest},
+	{Name: "ws/GenesisBlockByNumber", Run: genesisBlockByNumberTest},
+	{Name: "ws/GenesisHeaderByHash", Run: genesisHeaderByHashTest},
+	{Name: "ws/GenesisHeaderByNumber", Run: genesisHeaderByNumberTest},
+	{Name: "ws/Receipt", Run: receiptTest},
+	{Name: "ws/SyncProgress", Run: syncProgressTest},
+	{Name: "ws/TransactionCount", Run: transactionCountTest},
+	{Name: "ws/TransactionInBlock", Run: transactionInBlockTest},
+	{Name: "ws/TransactionReceipt", Run: TransactionReceiptTest},
 
-	// // WebSocket subscription tests.
-	// {Name: "ws/NewHeadSubscription", Run: newHeadSubscriptionTest},
-	// {Name: "ws/LogSubscription", Run: logSubscriptionTest},
-	// {Name: "ws/TransactionInBlockSubscription", Run: transactionInBlockSubscriptionTest},
+	// WebSocket subscription tests.
+	{Name: "ws/NewHeadSubscription", Run: newHeadSubscriptionTest},
+	{Name: "ws/LogSubscription", Run: logSubscriptionTest},
+	{Name: "ws/TransactionInBlockSubscription", Run: transactionInBlockSubscriptionTest},
 
-	// // WebSocket ABI tests.
-	// {Name: "ws/ABICall", Run: callContractTest},
-	// {Name: "ws/ABITransact", Run: transactContractTest},
+	// WebSocket ABI tests.
+	{Name: "ws/ABICall", Run: callContractTest},
+	{Name: "ws/ABITransact", Run: transactContractTest},
 }
 
 func main() {

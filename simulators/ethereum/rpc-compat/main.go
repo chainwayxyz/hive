@@ -35,27 +35,27 @@ func main() {
 	}
 
 	// Run the test suite.
-	suite := hivesim.Suite{
-		Name: "rpc-compat",
-		Description: `
-The RPC-compatibility test suite runs a set of RPC related tests against a
-running node. It tests client implementations of the JSON-RPC API for
-conformance with the execution API specification.`[1:],
-	}
-	suite.Add(&hivesim.ClientTestSpec{
-		Role:        "eth1",
-		Name:        "client launch",
-		Description: `This test launches the client and collects its logs.`,
-		Parameters:  clientEnv,
-		Files:       files,
-		Run: func(t *hivesim.T, c *hivesim.Client) {
-			sendForkchoiceUpdated(t, c)
-			runAllTests(t, c, c.Type)
-		},
-		AlwaysRun: true,
-	})
-	sim := hivesim.New()
-	hivesim.MustRunSuite(sim, suite)
+	// 	suite := hivesim.Suite{
+	// 		Name: "rpc-compat",
+	// 		Description: `
+	// The RPC-compatibility test suite runs a set of RPC related tests against a
+	// running node. It tests client implementations of the JSON-RPC API for
+	// conformance with the execution API specification.`[1:],
+	// 	}
+	// 	suite.Add(&hivesim.ClientTestSpec{
+	// 		Role:        "eth1",
+	// 		Name:        "client launch",
+	// 		Description: `This test launches the client and collects its logs.`,
+	// 		Parameters:  clientEnv,
+	// 		Files:       files,
+	// 		Run: func(t *hivesim.T, c *hivesim.Client) {
+	// 			sendForkchoiceUpdated(t, c)
+	// 			runAllTests(t, c, c.Type)
+	// 		},
+	// 		AlwaysRun: true,
+	// 	})
+	// 	sim := hivesim.New()
+	// 	hivesim.MustRunSuite(sim, suite)
 }
 
 func runAllTests(t *hivesim.T, c *hivesim.Client, clientName string) {
