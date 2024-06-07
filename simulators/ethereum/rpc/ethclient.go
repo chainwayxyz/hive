@@ -234,10 +234,10 @@ func genesisHeaderByHashTest(t *TestEnv) {
 	gblock := loadGenesis()
 
 	// Use Citrea Hive genesis block hash
-	citreaBlockHash := common.HexToHash("0xfe41fc10e8a644ca1333280cff2f0ff16d79a0beed6cb23665959ed08f43fcec")
+	citreaBlockHash := common.HexToHash("0xcc424a0b31048b04121e74f2dd12e5601a48200b777ae9c6e6f3c0ec61fbcb87")
 
 	// Use Citrea Hive genesis root hash
-	citreaRootHash := common.HexToHash("0x3e20512a747082bff85274f11099eb540ec75737624592e318af6ea1962c21e0")
+	citreaRootHash := common.HexToHash("0x8d5ecc23d29253e022544bb2acc9a955a1ca1fa8fa00a1346e56338cde08221e")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
@@ -259,7 +259,7 @@ func genesisHeaderByNumberTest(t *TestEnv) {
 	gblock := loadGenesis()
 
 	// Use Citrea's genesis root hash
-	citreaRootHash := common.HexToHash("0x3e20512a747082bff85274f11099eb540ec75737624592e318af6ea1962c21e0")
+	citreaRootHash := common.HexToHash("0x8d5ecc23d29253e022544bb2acc9a955a1ca1fa8fa00a1346e56338cde08221e")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
@@ -281,10 +281,10 @@ func genesisBlockByHashTest(t *TestEnv) {
 
 	// gblock.root = [1,2,3]
 
-	citreaBlockHash := common.HexToHash("0xfe41fc10e8a644ca1333280cff2f0ff16d79a0beed6cb23665959ed08f43fcec")
+	citreaBlockHash := common.HexToHash("0xcc424a0b31048b04121e74f2dd12e5601a48200b777ae9c6e6f3c0ec61fbcb87")
 
 	// Use Citrea's genesis root hash
-	citreaRootHash := common.HexToHash("0x3e20512a747082bff85274f11099eb540ec75737624592e318af6ea1962c21e0")
+	citreaRootHash := common.HexToHash("0x8d5ecc23d29253e022544bb2acc9a955a1ca1fa8fa00a1346e56338cde08221e")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
@@ -307,7 +307,7 @@ func genesisBlockByNumberTest(t *TestEnv) {
 	gblock := loadGenesis()
 
 	// Use Citrea's genesis root hash
-	citreaRootHash := common.HexToHash("0x3e20512a747082bff85274f11099eb540ec75737624592e318af6ea1962c21e0")
+	citreaRootHash := common.HexToHash("0x8d5ecc23d29253e022544bb2acc9a955a1ca1fa8fa00a1346e56338cde08221e")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
