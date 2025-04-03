@@ -207,7 +207,7 @@ func balanceAndNonceAtTest(t *TestEnv) {
 	exp.Sub(exp, amount)
 	exp.Sub(exp, new(big.Int).Mul(big.NewInt(int64(receipt.GasUsed)), valueTx.GasPrice()))
 	// subtract citrea diff size * l1 fee rate
-	exp.Sub(exp, new(big.Int).Mul(big.NewInt(104), big.NewInt(10)))
+	exp.Sub(exp, new(big.Int).Mul(big.NewInt(17), big.NewInt(10)))
 
 	if exp.Cmp(accountBalanceAfter) != 0 {
 		t.Errorf("Expected sender account to have a balance of %d, got %d", exp, accountBalanceAfter)
@@ -234,14 +234,20 @@ func genesisHeaderByHashTest(t *TestEnv) {
 	gblock := loadGenesis()
 
 	// Use Citrea Hive genesis block hash
-	citreaBlockHash := common.HexToHash("0x67483f22e31f1ca26cb5475507b3473e9a0fa9913d38364dc81eac79f161fddc")
+	citreaBlockHash := common.HexToHash("0xa1b2c0618de019416e897b5c7e25bfb18baae39550304ce4ce3e9dd277cfbc46")
 
 	// Use Citrea Hive genesis root hash
-	citreaRootHash := common.HexToHash("0x0d4df27fd99ab1df21528bf8833531e5a15c6f2b2bd4f5f9d6499e327e49c6fb")
+	citreaRootHash := common.HexToHash("0x2d76397ba838cf03e6e91299024ad9538c7d706f048e2c4f65357470a8cc063f")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
 	newHeader.Root = citreaRootHash
+
+	newHeader.BlobGasUsed = new(uint64)
+	*newHeader.BlobGasUsed = 0
+
+	newHeader.ExcessBlobGas = new(uint64)
+	*newHeader.ExcessBlobGas = 0
 
 	headerByHash, err := t.Eth.HeaderByHash(t.Ctx(), citreaBlockHash)
 	if err != nil {
@@ -259,11 +265,17 @@ func genesisHeaderByNumberTest(t *TestEnv) {
 	gblock := loadGenesis()
 
 	// Use Citrea's genesis root hash
-	citreaRootHash := common.HexToHash("0x0d4df27fd99ab1df21528bf8833531e5a15c6f2b2bd4f5f9d6499e327e49c6fb")
+	citreaRootHash := common.HexToHash("0x2d76397ba838cf03e6e91299024ad9538c7d706f048e2c4f65357470a8cc063f")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
 	newHeader.Root = citreaRootHash
+
+	newHeader.BlobGasUsed = new(uint64)
+	*newHeader.BlobGasUsed = 0
+
+	newHeader.ExcessBlobGas = new(uint64)
+	*newHeader.ExcessBlobGas = 0
 
 	headerByNum, err := t.Eth.HeaderByNumber(t.Ctx(), big0)
 	if err != nil {
@@ -281,14 +293,20 @@ func genesisBlockByHashTest(t *TestEnv) {
 
 	// gblock.root = [1,2,3]
 
-	citreaBlockHash := common.HexToHash("0x67483f22e31f1ca26cb5475507b3473e9a0fa9913d38364dc81eac79f161fddc")
+	citreaBlockHash := common.HexToHash("0xa1b2c0618de019416e897b5c7e25bfb18baae39550304ce4ce3e9dd277cfbc46")
 
 	// Use Citrea's genesis root hash
-	citreaRootHash := common.HexToHash("0x0d4df27fd99ab1df21528bf8833531e5a15c6f2b2bd4f5f9d6499e327e49c6fb")
+	citreaRootHash := common.HexToHash("0x2d76397ba838cf03e6e91299024ad9538c7d706f048e2c4f65357470a8cc063f")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
 	newHeader.Root = citreaRootHash
+
+	newHeader.BlobGasUsed = new(uint64)
+	*newHeader.BlobGasUsed = 0
+
+	newHeader.ExcessBlobGas = new(uint64)
+	*newHeader.ExcessBlobGas = 0
 
 	blockByHash, err := t.Eth.BlockByHash(t.Ctx(), citreaBlockHash)
 
@@ -307,11 +325,17 @@ func genesisBlockByNumberTest(t *TestEnv) {
 	gblock := loadGenesis()
 
 	// Use Citrea's genesis root hash
-	citreaRootHash := common.HexToHash("0x0d4df27fd99ab1df21528bf8833531e5a15c6f2b2bd4f5f9d6499e327e49c6fb")
+	citreaRootHash := common.HexToHash("0x2d76397ba838cf03e6e91299024ad9538c7d706f048e2c4f65357470a8cc063f")
 
 	// Change the Root of the genesis block's header to match citrea's root
 	newHeader := gblock.Header()
 	newHeader.Root = citreaRootHash
+
+	newHeader.BlobGasUsed = new(uint64)
+	*newHeader.BlobGasUsed = 0
+
+	newHeader.ExcessBlobGas = new(uint64)
+	*newHeader.ExcessBlobGas = 0
 
 	blockByNum, err := t.Eth.BlockByNumber(t.Ctx(), big0)
 	if err != nil {
