@@ -1,5 +1,5 @@
-ARG baseimage=chainwayxyz1/citrea
-ARG tag=latest
+ARG baseimage=chainwayxyz/citrea
+ARG tag=hive-latest
 
 FROM $baseimage:$tag as builder
 
@@ -20,7 +20,7 @@ ADD enode.sh /hive-bin/enode.sh
 RUN chmod +x /hive-bin/enode.sh
 
 # Create version.txt
-RUN /usr/local/bin/reth --version | sed -e 's/reth \(.*\)/\1/' > /version.txt
+RUN /app/target/release/citrea --version > /version.txt 2>&1 || echo "citrea-hive" > /version.txt
 
 # Export the usual networking ports to allow outside access to the node.
 EXPOSE 8545 8546 30303 30303/udp
