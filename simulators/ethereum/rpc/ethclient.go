@@ -234,11 +234,9 @@ func genesisHeaderByHashTest(t *TestEnv) {
 	gblock := loadGenesis()
 
 	// Use Citrea Hive genesis block hash
-	//
 	citreaBlockHash := common.HexToHash("0xe03d68e09c4c9efccff30a54705eccd9bc2a67e04b3d3f9194aa34c8c2fb8ca6")
 
 	// Use Citrea Hive genesis root hash
-	// 0x915aae197263939ffe0d9cc3da585a63598adb50b075b9e0a01e350f8912704e
 	citreaRootHash := common.HexToHash("0x915aae197263939ffe0d9cc3da585a63598adb50b075b9e0a01e350f8912704e")
 
 	// Change the Root of the genesis block's header to match citrea's root
